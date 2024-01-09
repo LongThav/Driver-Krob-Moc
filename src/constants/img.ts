@@ -1,0 +1,1 @@
+export const splashScreen1 = require('../assets/splash_screen.png');
