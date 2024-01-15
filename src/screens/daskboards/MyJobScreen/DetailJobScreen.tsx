@@ -1,15 +1,21 @@
-import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
-import React from 'react';
-import {ColorApp} from '../../../constants/Color';
+import {StyleSheet, Text, View, Image, ScrollView, Modal, TextInput, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import {ColorApp, btnColor} from '../../../constants/Color';
 import {fontSize} from '../../../constants/FontSize';
 import {height, width} from '../../../constants/WindowSize';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {} from 'react-native-gesture-handler';
 import {navigate} from '../../../services/navigate/Index';
 import LinearGradient from 'react-native-linear-gradient';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const DetailJobScreen = () => {
+  const [showDialog, setShowDialog] = useState(false);
+  const AlertDialog = () => {
+    setShowDialog(dialog => !dialog);
+  };
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1, marginBottom: '18%'}}>
@@ -208,7 +214,9 @@ const DetailJobScreen = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <View style={styles.Bottom}>
+      <TouchableOpacity activeOpacity={0.8} onPress={()=>{
+        AlertDialog();
+      }} style={styles.Bottom}>
         <LinearGradient
           colors={[ColorApp.cardColor, ColorApp.puple]}
           start={{x: 0.5, y: 5}}
@@ -256,7 +264,97 @@ const DetailJobScreen = () => {
             />
           </View>
         </LinearGradient>
-      </View>
+      </TouchableOpacity>
+      <Modal visible={showDialog} animationType="fade" transparent={true}>
+            <View style={styles.modalView}>
+              <View style={styles.alertDialog}>
+                <View style={styles.circle}>
+                  <AntDesign
+                    style={{width: 40, height: 40, borderRadius: 40 / 2}}
+                    size={40}
+                    name="checkcircle"
+                    color={ColorApp.cardColor}
+                  />
+                </View>
+                <Text style={styles.txtFill}>Please fill delivery code</Text>
+                <Text style={styles.txtFill}>and Upload proof photo</Text>
+                <Text style={styles.txtFill}>to complete</Text>
+                <View style={styles.frmInput}>
+                  <TextInput
+                    placeholderTextColor={'grey'}
+                    placeholder="Input Driver code here"
+                    style={styles.txtTextInput}
+                  />
+                </View>
+                {/* {selectedImage ? (
+              <Image
+                source={{uri: selectedImage}}
+                style={{width: 200, height: 200, marginBottom: 20}}
+              />
+            ) : (
+              <Text style={{marginBottom: 20}}>No Image Selected</Text>
+            )} */}
+                <View style={styles.rowPhoto}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => {
+                      console.log('onPress');
+                      // openImagePicker();
+                    }}>
+                    <View style={styles.circleGallery}>
+                      <FontAwesome size={15} color={'grey'} name="photo" />
+                    </View>
+                    <Text
+                      style={{
+                        fontSize: fontSize.font12,
+                        color: 'grey',
+                        textAlign: 'center',
+                      }}>
+                      Gallery
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => {
+                      console.log('Press');
+                      // <Camera
+                      //   style={StyleSheet.absoluteFill}
+                      //   device={device}
+                      //   isActive={true}
+                      // />;
+                    }}>
+                    <View style={styles.circleGallery}>
+                      <EvilIcons size={25} color={'grey'} name="camera" />
+                    </View>
+                    <Text
+                      style={{
+                        fontSize: fontSize.font12,
+                        color: 'grey',
+                        textAlign: 'center',
+                      }}>
+                      Camera
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.txtBtn}>
+                  <Text onPress={()=>{}} style={styles.txtCancel}>
+                    Cancel
+                  </Text>
+                  <Text
+                    onPress={() => {
+                      // showDialogs();
+                      navigate('History');
+                    }}
+                    style={[
+                      styles.txtCancel,
+                      {backgroundColor: btnColor, color: 'white'},
+                    ]}>
+                    Done
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </Modal>
     </View>
   );
 };
@@ -408,5 +506,83 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginLeft: 15,
     opacity: 0.8,
+  },
+  modalView: {
+    flex: 1,
+    alignContent: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  alertDialog: {
+    alignSelf: 'center',
+    marginHorizontal: '10%',
+    width: '90%',
+    margin: 48,
+    elevation: 24,
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    paddingHorizontal: 15,
+    paddingVertical: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  circle: {
+    width: 45,
+    height: 45,
+    borderRadius: 45 / 2,
+    borderWidth: 10,
+    borderColor: '#ede5f2',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  txtFill: {
+    marginTop: 8,
+    fontSize: fontSize.font15,
+    color: 'black',
+  },
+  frmInput: {
+    width: '90%',
+    paddingVertical: 7,
+    borderWidth: 1,
+    borderColor: 'grey',
+    marginTop: 12,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  txtTextInput: {
+    padding: 0,
+    width: '90%',
+    textAlign: 'center',
+  },
+  rowPhoto: {
+    flexDirection: 'row',
+    marginTop: 20,
+    justifyContent: 'space-evenly',
+    width: '70%',
+  },
+  circleGallery: {
+    width: 30,
+    height: 30,
+    borderRadius: 30 / 2,
+    backgroundColor: '#ebebeb',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 4,
+    marginBottom: 4,
+  },
+  txtBtn: {
+    marginTop: 18,
+    flexDirection: 'row',
+    width: '80%',
+    justifyContent: 'space-evenly',
+  },
+  txtCancel: {
+    paddingHorizontal: 40,
+    paddingVertical: 9,
+    borderWidth: 1,
+    borderColor: btnColor,
+    borderRadius: 20,
+    color: btnColor,
   },
 });

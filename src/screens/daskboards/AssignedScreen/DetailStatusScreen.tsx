@@ -7,8 +7,10 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
+  PermissionsAndroid,
+  Platform,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {ColorApp, btnColor} from '../../../constants/Color';
 import {fontSize} from '../../../constants/FontSize';
 import {height, width} from '../../../constants/WindowSize';
@@ -19,15 +21,19 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import ImagePicker, {
-  ImagePickerResponse,
   ImageLibraryOptions,
+  ImagePickerResponse,
 } from 'react-native-image-picker';
+// import {RNCamera} from 'react-native-camera';
 
-import {
-  Camera,
-  useCameraDevice,
-  useCameraPermission,
-} from 'react-native-vision-camera';
+const options = {
+  title: 'Select Avatar',
+  customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
 
 // const { hasPermission, requestPermission } = useCameraPermission()
 // https://react-native-vision-camera.com/docs/guides
@@ -37,18 +43,8 @@ const DetailStatusScreen = () => {
   const [titleString, setTitleString] = useState('Start Delivery');
   const [showDialog, setShowDialog] = useState(false);
 
-  const device = useCameraDevice('back');
-
-  if (device == null) return <></>;
-
-  const toggleTitle = () => {
-    setTitle(checkTitle => !checkTitle);
-    if (title == true) {
-      setTitleString('Finish');
-    } else {
-      setTitleString('Start Delivery');
-    }
-  };
+  //   }
+  // };
   const showDialogs = () => setShowDialog(!showDialog);
   console.log('Title: ', title);
   console.log('Title True or false: ', showDialog);
@@ -75,6 +71,46 @@ const DetailStatusScreen = () => {
       }
     });
   };
+  //  const device = useCameraDevice('back');
+
+  //   if (device == null) return <></>;
+
+  const toggleTitle = () => {
+    setTitle(checkTitle => !checkTitle);
+    if (title == true) {
+      setTitleString('Finish');
+    } else {
+      setTitleString('Start Delivery');
+    }
+  };
+
+  // const cameraRef = useRef<RNCamera | null>(null);
+  // const [isRecording, setRecording] = useState(false);
+
+  // const takePicture = async () => {
+  //   if (cameraRef.current) {
+  //     const options = {quality: 0.5, base64: true};
+  //     const data = await cameraRef.current.takePictureAsync(options);
+  //     console.log(data);
+  //   }
+  // };
+
+  // const startRecording = async () => {
+  //   if (cameraRef.current) {
+  //     const options = {maxDuration: 10}; // Set the maximum recording duration in seconds
+  //     const data = await cameraRef.current.recordAsync(options);
+  //     console.log(data);
+  //     setRecording(true);
+  //   }
+  // };
+
+  // const stopRecording = async () => {
+  //   if (cameraRef.current) {
+  //     const data = await cameraRef.current.stopRecording();
+  //     console.log(data);
+  //     setRecording(false);
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
@@ -279,7 +315,7 @@ const DetailStatusScreen = () => {
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => {
-          toggleTitle();
+          // toggleTitle();
           showDialogs();
         }}
         style={styles.Bottom}>
@@ -352,11 +388,14 @@ const DetailStatusScreen = () => {
                 style={styles.txtTextInput}
               />
             </View>
-            {selectedImage ? (
-        <Image source={{ uri: selectedImage }} style={{ width: 200, height: 200, marginBottom: 20 }} />
-      ) : (
-        <Text style={{ marginBottom: 20 }}>No Image Selected</Text>
-      )}
+            {/* {selectedImage ? (
+              <Image
+                source={{uri: selectedImage}}
+                style={{width: 200, height: 200, marginBottom: 20}}
+              />
+            ) : (
+              <Text style={{marginBottom: 20}}>No Image Selected</Text>
+            )} */}
             <View style={styles.rowPhoto}>
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -380,11 +419,11 @@ const DetailStatusScreen = () => {
                 activeOpacity={0.8}
                 onPress={() => {
                   console.log('Press');
-                  <Camera
-                    style={StyleSheet.absoluteFill}
-                    device={device}
-                    isActive={true}
-                  />
+                  // <Camera
+                  //   style={StyleSheet.absoluteFill}
+                  //   device={device}
+                  //   isActive={true}
+                  // />;
                 }}>
                 <View style={styles.circleGallery}>
                   <EvilIcons size={25} color={'grey'} name="camera" />

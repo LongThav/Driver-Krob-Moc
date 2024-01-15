@@ -83,6 +83,7 @@ const AccoutScreen = () => {
   };
 
   console.log('Show dialog: ', showDialog);
+  
 
   return (
     <View style={styles.container}>
@@ -176,10 +177,24 @@ const AccoutScreen = () => {
                   columnWrapperStyle={{justifyContent: 'space-between'}}
                   renderItem={({item, index}) => {
                     return (
-                      <View style={styles.gride}>
+                      <TouchableOpacity
+                        activeOpacity={0.8}
+                        style={styles.gride}
+                        onPress={() => {
+                          console.log(index);
+                          if (index == 0) {
+                            console.log('About us');
+                            navigate('AboutUsScreen');
+                          } else if (index == 3) {
+                            console.log('Contact Us');
+                            navigate('ContactScreen');
+                          } else {
+                            console.log('Something else');
+                          }
+                        }}>
                         <Image source={item.icon} style={{marginBottom: 4}} />
                         <Text style={styles.txtTitle}>{item.title}</Text>
-                      </View>
+                      </TouchableOpacity>
                     );
                   }}
                 />
@@ -197,9 +212,11 @@ const AccoutScreen = () => {
                       <TouchableOpacity
                         activeOpacity={0.8}
                         onPress={() => {
-                          console.log('onPressed:', index);
                           if (index == 1) {
                             navigate('ChangePasswordScreen');
+                          }else{
+                            console.log('Setting');
+                            navigate('SettingScreen')
                           }
                         }}
                         style={styles.gridII}>

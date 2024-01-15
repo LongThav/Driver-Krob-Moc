@@ -28,6 +28,9 @@ import AcceptScreen from '../../screens/daskboards/SpeedScreen/AcceptScreen';
 import EditAccount from '../../screens/daskboards/AccountScreen/EditAccount';
 import ChangePasswordScreen from '../../screens/daskboards/AccountScreen/ChangePasswordScreen';
 import TestScreen from '../../screens/daskboards/TestScreen';
+import AboutUsScreen from '../../screens/daskboards/AccountScreen/AboutUsScreen';
+import ContactScreen from '../../screens/daskboards/AccountScreen/ContactScreen';
+import SettingScreen from '../../screens/daskboards/AccountScreen/SettingScreen';
 
 const MainStack = () => {
   const Stack = createStackNavigator();
@@ -404,6 +407,87 @@ const MainStack = () => {
           headerShown: true,
           headerTitleStyle: {color: 'black'},
           title: 'Test Screen',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: ColorApp.bgColor,
+          },
+          headerLeft: () => {
+            return (
+              <View style={styles.btnBack}>
+                <AntDesign
+                  name="left"
+                  size={20}
+                  color={'grey'}
+                  onPress={() => {
+                    goBack();
+                  }}
+                />
+              </View>
+            );
+          },
+        }}
+      />
+      <Stack.Screen
+        component={AboutUsScreen}
+        name="AboutUsScreen"
+        options={{
+          headerShown: true,
+          headerTitleStyle: {color: 'black'},
+          title: 'About Us',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: ColorApp.bgColor,
+          },
+          headerLeft: () => {
+            return (
+              <View style={styles.btnBack}>
+                <AntDesign
+                  name="left"
+                  size={20}
+                  color={'grey'}
+                  onPress={() => {
+                    goBack();
+                  }}
+                />
+              </View>
+            );
+          },
+        }}
+      />
+      <Stack.Screen
+        component={ContactScreen}
+        name="ContactScreen"
+        options={{
+          headerShown: true,
+          headerTitleStyle: {color: 'black'},
+          title: 'Contact Us',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: ColorApp.bgColor,
+          },
+          headerLeft: () => {
+            return (
+              <View style={styles.btnBack}>
+                <AntDesign
+                  name="left"
+                  size={20}
+                  color={'grey'}
+                  onPress={() => {
+                    goBack();
+                  }}
+                />
+              </View>
+            );
+          },
+        }}
+      />
+      <Stack.Screen
+        component={SettingScreen}
+        name="SettingScreen"
+        options={{
+          headerShown: true,
+          headerTitleStyle: {color: 'black'},
+          title: 'Setting',
           headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: ColorApp.bgColor,
